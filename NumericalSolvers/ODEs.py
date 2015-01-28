@@ -34,3 +34,40 @@ def LinearODE(x,t,params):
     derivs.append(G*(l2)*( hd*(x[0] - x[N-1]) + hs*( x[N-2] - x[N-1] ) + sigma*2*( 2*( hd*x[0] + hs*x[N-2]) - (hs + hd))*x[N-1]*(1-x[N-1]) ))
 
     return derivs
+
+
+def TwoGroupODE(x,t,params):
+
+    l2,N,n,hs,hd,sigma = params
+    G = 2.0/(N*(N-1))
+
+    # Derivative functions
+    derivs = []
+
+    # Sum over speakers
+    for i in range(0,N):
+        dxibydt = 0.0
+        hij = 0.0
+        si = 0.0
+        siStar = sigma*( (n-1)*hs + n*hd )
+
+        for j in range(0,N):
+            if (i != j):
+                if (i < n and j < n) or (i > n-1 and j > n-1):
+                    hij = hs
+                else:
+                    hij = hd
+                si = si + sigma*hij*x[j]
+
+        for j in range (0,N):
+            if (i != j):
+                if (i < n and j < n) or (i > n-1 and j > n-1):
+                    hij = hs
+                else:
+                    hij = hd
+
+                dxibydt = dxibydt + G*l2*( hij*( x[j] - x[i] ) + ( 2*si - siStar )*x[i]*(1-x[i]) )
+
+        derivs.append( dxibydt )
+
+    return derivs
