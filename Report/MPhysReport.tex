@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{placeins}
+\usepackage{parskip}
+%\usepackage{fullpage}
+\usepackage{epstopdf}
+\usepackage[margin = 1.0in]{geometry}
+
+\usepackage[toc]{appendix}
+
+\usepackage{listings,xcolor}
+\usepackage[nottoc]{tocbibind}
+
+\lstset{language=Java}
+\lstset{basicstyle={\sffamily\footnotesize},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  captionpos={t},
+  frame={lines},
+  rulecolor=\color{black},
+  framerule=0.5pt,
+  columns=flexible,
+  tabsize=2
+}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\begin{minipage}[b]{110mm}
+        {\Huge\bf School of Physics\\ and Astronomy
+        \vspace*{17mm}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{40mm}               
+        \makebox[40mm]{
+        \includegraphics[width=40mm]{crest.eps}}
+\end{minipage}
+
+\vspace*{2cm}
+\begin{center}
+        \Large\bf \Large\bf MPhys Project\\
+        \LARGE\bf Statistical Physics of Replication Dynamics
+\end{center}
+\vspace*{0.5cm}
+\begin{center}
+        Alistair Jones\\  
+        {\bf Supervisor:} Dr. R. A. Blythe \\          
+        March 2015     
+\end{center}
+
+\begin{center}
+\subsection*{Abstract}
+\end{center}
+
+\newpage
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+\section{Method}
+As stated above, the two sources of selection involved in the model presented were interactor and replicator selection. The former is associated to both how often a particular variant is heard by a speaker and how strongly influenced by others a speaker is, while the latter incorporates the intrinsic preference of a speaker towards a particular variant. A simplified model, which ignores replicator selection, known as the 'Utterance Selection Model' (USM) \cite{USM} forms the basis for the model used in this investigation. In order to include replicator selection, a refinement of the original USM, which is presented in \cite{refined}, was used. 
+
+\subsection{Refined utterance selection model}
+This model comprises of $N$ speakers and $1$ linguistic variable with a set of $V$ variants, where each speaker has knowledge of all variants. Speakers and variants are indexed by $i$ and $v$ respectively, with $i \in \{1, 2, ... , N\}$ and $v \in \{1, 2, ..., V\}$. The probability of speaker $i$ speaking variant $v$ is $x_{iv}$, which gives the frequency with which the speaker perceives the variant to be used in the community. In this and subsequent models, speaking is the production of one or more tokens, each corresponding to an instance of a particular variant. The number of tokens of variant $v$ produced by speaker $i$ is $n_{iv}$. The probabilities $\{x_{iv}\}$ are modified by the interactions between different speakers in the community. The interaction process is as follows: 
+\begin{itemize}
+\item[1.] Two speakers, $i$ and $j$, are chosen at random to interact.
+\item[2.] Both generate a set of $T$ tokens, with $\sum\limits_{v = 1}^{V} (n_{iv} + n_{jv}) = T$. 
+\item[3.] Both then construct a collection of \emph{perceived frequencies}, $y_{iv}$ and $y_{jv}$, which represent each speakers perception of the use of each variant (by both speakers). For speaker $i$ this is given by
+\begin{equation} \label{y}
+y_{iv} = f_{iv}(\frac{n_{iv}}{T}) + H_{ij}f_{iv}(\frac{n_{jv}}{T})
+\end{equation}
+where $H_{ij}$ gives the weight speaker $i$ ascribes to the utterances of speaker $j$ and the function $f_{iv}$ is defined below. The parameter $H_{ij}$ is thus the mechanism by which interactor selection is incorporated into the model. There is an analogous expression for speaker $j$. 
+\item[4.] Each speaker modifies their speech behaviour via
+\begin{equation}\label{x}
+x_{iv}' = \frac{x_{iv} + \lambda y_{iv}}{Z}
+\end{equation}
+where $\lambda$ is a small parameter ($\lambda \approx 0.01$) controlling the amount each interaction affects a speakers behaviour and $Z = 1 + \lambda \sum\limits_{v} y_{iv} = 1 + \lambda (1 + H_{ij})$, which is found by enforcing that $\sum\limits_{v} x_{iv}' = 1$ and where the last equality holds for $f_{iv}(u) = u$ in \eqref{y}. Again there are analogous expressions for speaker $j$.
+\end{itemize}
+An important point to note in the above is that the weights $H_{ij}$ are not necessarily symmetric, i.e it is possible to have $H_{ij} \neq  H_{ji}$ which is the case if speaker $i$ does not pay as much attention to speaker $j$ as $j$ does to $i$ or visa versa. However for the purposes of this study the weights are all symmetric. 
+
+The function $f_{iv}(u)$ allows for a number of effects to be included; most importantly replicator selection. The intrinsic replicator weight speaker $i$ ascribes to variant $v$ is given by $S_{iv}$, which can then be incorporated into the form of $f_{iv}$. For this investigation $f_{iv}$ was defined to be
+\begin{equation}\label{f}
+f_{iv}(u) = min \big(1, (1 + S_{iv})u \big)
+\end{equation}
+which ensures that variants with a higher $S_{iv}$ will be preferred. The minimum value of $1$ and $(1 + S_{iv})u$ is chosen as it ensures that $y_{iv}$ satisfies
+\begin{equation}
+y_{iv} \leq 1 + H_{ij}
+\end{equation}
+which is required for $Z \approx 1 + \lambda (1 + H_{ij})$, as is the case for $f_{iv}(u) = u$. This normalisation is very useful for performing computations, as a relatively large amount of calculations can be avoided.   
+
+\subsection{Emergence of replicator selection}
+As stated previously, the main aim of this investigation was to study the emergence of replicator selection from interactions between the speakers. This enters in through the intrinsic replicator weight speaker $i$ ascribes to variant $v$, $S_{iv}$, which changes according to interactions between speakers in a similar way to the variant frequency $x_{iv}$. To construct the replicator weights the model used here gives speakers the ability to record the behaviour of specific individuals through the definition of a set of variables $\{u_{ijv}\}$, which is the frequency that speaker $i$ perceives speaker $j$ to use variant $v$. The replicator weights are then taken to be given by
+\begin{equation}
+S_{iv} = \sigma \sum\limits_{j} H_{ij}u_{ijv}
+\end{equation}
+where $\sigma$ is an independent parameter. Note that when $\sigma = 0 $, $f_{iv}(u) = u$ is recovered, which is the case when there is no replicator selection as in the original USM. The form for $S_{iv}$ is such that if a speaker $j$ uses a particular variant with a high frequency, and $i$ ascribes a high interaction weight, $H_{ij}$, to the utterances of $j$, then $S_{iv}$ will be large in comparison to the replicator weight of other variants. The update rule for $u_{ijv}$ is
+\begin{equation}\label{u}
+u_{ijv}' = \frac{u_{ijv} + \gamma (\frac{n_{jv}}{T})}{1 + \gamma}
+\end{equation}
+where $\gamma$ is similar to $\lambda$ in the previous section, as it scales the affect of interactions on $u_{ijv}$, and the normalisation $1 + \gamma$ is due to the requirement that $\sum\limits_{v} u_{ijv} = 1$. There is an analogous expression for $u_{jiv}$. This expression can be used to derive an update rule for $S_{iv}$, 
+\begin{equation}\label{S}
+S_{iv}' = \frac{S_{iv} + \sigma \gamma \sum\limits_{j} H_{ij}(\frac{n_{jv}}{T})}{1 + \gamma}
+\end{equation}
+which is more useful for performing computations as less variables need to be stored. Again a similar expression exists for $S_{jv}$. The new update sequence for the usage frequencies $x_{iv}$ and $x_{jv}$ is then as follows:
+\begin{itemize}
+\item[1.] As in the refined USM above; two speakers, $i$ and $j$, are chosen at random to interact.
+\item[2.] Both generate $T$ tokens according to their corresponding usage frequencies $x_{iv}$ and $x_{jv}$
+\item[3.] The replicator weights $S_{iv}$ and $S_{jv}$ are updated according to \eqref{S} and the analogous expression for speaker $j$.
+\item[4.] The usage frequencies $x_{iv}$ and $x_{jv}$ are then updated as in the USM, using \eqref{f} and a similar expression for $f_{jv}$.
+\end{itemize}
+The difference between this model and the original USM is the addition of step 3, in which the replicator weights are updated. When put into the context of an update cycle, it is clear that using \eqref{S} instead of \eqref{u} in step 3 prevents both storing the $u_{ijv}$ values, of which there will be many, and summing expression \eqref{u} over $j$ to obtain $S_{iv}$. This makes the cycle much more tractable with regards to performing computer simulations.
+
+\subsection{Computer simulations of speech communities}
+The primary components of all simulations were: a single linguistic variable, of which there were always two variants, containing the usage probabilities $x_{iv}$ and the number of tokens of each variant generated during an interaction $n_{iv}$; a collection of $N$ speakers each able to 'speak' by generating $T$ tokens according to the usage probabilities, perceive the frequency with which certain variants are used and modify their speech preferences accordingly; and a method for speaker interaction, where an interacting pair of speakers is selected to perform the three actions previously mentioned (speech, perception and modification). 
+
+\subsubsection{Variables and variants}
+A variable object contains the information about each and every variant for every speaker. The key components of the variables are arrays to store the usage probabilities $x_{iv}$ and the token numbers $n_{iv}$ and the ability to retrieve and alter both. As the tokens are added one at a time, it is useful to include the function to increase the token number by 1. Additionally, as the token numbers are reset at the end of each time step, it is convenient to allow for them to be reset to zero. Furthermore, variables were also written to contain an array for the intrinsic replicator weights, with methods to change and obtain them.
+
+\subsubsection{Speakers}
+An interaction between speakers constitutes both individuals speaking, perceiving the speech of others and modifying their behaviour accordingly. Two important quantities for each speaker are an integer index, for referencing variant specific information in the variable object, and an array for the interactor weights $H_{ij}$, which is shared by all speakers. The ability to retrieve elements of $H_{ij}$ and change them is also crucial. There are three key methods required by speakers, which provide the abilities to: speak by performing step 2 in the sequences above, increasing $n_{iv}$ by 1 each time a token of variant $v$ is generated; perceive the speech of the other speaker in the interacting pair by constructing $y_{iv}$; and finally, calculate $x_{iv}'$ according to \eqref{x}, given $y_{iv}$, for every $v$. 
+
+\newpage
+\begin{thebibliography}{99}
+\bibitem{USM} 	G. J. Baxter, R. A. Blythe, W. Croft and A. J. McKane. Utterance selection model of language change. \emph{Physical Review E} 2006; 73(046118). arXiv:cond-mat/0512588 (accessed 16 January 2015).
+\bibitem{refined} 1.	R. A. Blythe and W. Croft . S-curves and the mechanisms of propagation in language change. \emph{Language} 2012; 88(269). http://muse.jhu.edu/journals/language/ v088/88.2.blythe.html (accessed 16 January 2015).
+\end{thebibliography}
+
+\end{document}
