@@ -1,3 +1,5 @@
+package StochasticSimulation;
+
 import java.io.*;
 
 /*MPhysProject: Test class for multi speaker network

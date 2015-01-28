@@ -1,3 +1,5 @@
+package StochasticSimulation;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;

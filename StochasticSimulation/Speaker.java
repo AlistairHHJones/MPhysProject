@@ -1,3 +1,5 @@
+package StochasticSimulation;
+
 import java.util.Random;
 
 /*MPhysProject: Speaker class

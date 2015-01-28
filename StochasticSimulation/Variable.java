@@ -4,6 +4,7 @@
  *Date Created: 20/9/2014
  *Last Updated: 21/9/2014
  */
+package StochasticSimulation;
 
 public class Variable {
 	 

@@ -1,3 +1,5 @@
+package StochasticSimulation;
+
 import java.io.*;
 
 
@@ -58,7 +60,7 @@ public class Test3_1dLattice {
 		V[0].setProbability(0, prob1);
 		V[0].setProbability(numSpeakers-1, prob2);
 		
-		int numK = 10;
+		int numK = 1;
 
 		//Data array
 		double[][] data = new double[numSpeakers][2];
