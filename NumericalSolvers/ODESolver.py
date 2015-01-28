@@ -5,13 +5,13 @@ import math
 
 
 def f(x,t,params):
-    
+
     G,l2,N,n,hs,hd,sigma = params
 
     #End point
     derivs = []
     derivs.append(0.0)
-    
+
     #Left side of chain
     for i in range(1,N/2-1):
         t = G*(l**2)*hs*(x[i+1] + x[i-1] - 2*x[i] + 2*sigma*(N-1)*(x[i+1] + x[i-1] - 1)*x[i]*(1-x[i]) )
@@ -30,7 +30,7 @@ def f(x,t,params):
         derivs.append( t3 )
 
     #End point
-    derivs.append(0.0)
+    derivs.append(0.0) 
 
     return derivs
 
@@ -76,6 +76,3 @@ plt.plot(psoln2[numSteps-1,:], label = '0.01')
 plt.plot(psoln3[numSteps-1,:], label = '0.001')
 plt.legend(loc = 2)
 plt.show()
-
-
-
