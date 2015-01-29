@@ -12,7 +12,7 @@ N = 100
 n = N/2
 hs = 0.1
 hd = hs/10
-sigma = 0.002
+sigma = 0.01
 l = 0.01
 
 # Set lambda squared to be 1
@@ -30,9 +30,9 @@ t = np.arange(1, length, step)
 x0 = []
 x0.append(0.5)
 for i in range(1,N-1):
-    if i == 25:#in range(23,27):
+    if i == 25:
         x0.append(0.51)
-    elif i == 75:#in range(73,77):
+    elif i == 75:
         x0.append(0.49)
     else:
         x0.append(0.5)
@@ -62,6 +62,6 @@ anim = animation.FuncAnimation(fig, animate, np.arange(1, 2000), init_func=init,
     interval=25, blit=False)
 
 
-#anim.save('LinearChain.mp4', fps=30, extra_args=[])
+anim.save('LinearChain.mp4', fps=30, extra_args=[])
 
 plt.show()

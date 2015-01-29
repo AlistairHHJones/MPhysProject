@@ -34,10 +34,10 @@ x0.append(1.0)
 t = np.arange(0., length, step)
 
 # Solve odes
-psoln = odeint(linearODE,x0,t,args=(params,))
-psoln1 = odeint(linearODE,x0,t,args=(params1,))
-psoln2 = odeint(linearODE,x0,t,args=(params2,))
-psoln3 = odeint(linearODE,x0,t,args=(params3,))
+psoln = odeint(LinearODE,x0,t,args=(params,))
+psoln1 = odeint(LinearODE,x0,t,args=(params1,))
+psoln2 = odeint(LinearODE,x0,t,args=(params2,))
+psoln3 = odeint(LinearODE,x0,t,args=(params3,))
 
 # Plot results
 plt.plot(psoln1[1,:], label = '0.1')
