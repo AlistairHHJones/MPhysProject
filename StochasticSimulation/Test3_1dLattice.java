@@ -16,7 +16,7 @@ public class Test3_1dLattice {
 		//Weights matrix
 		double[][] H = new double[numSpeakers][numSpeakers];
 		double HS = 0.1;
-		double HD = 0;//HS/1000;
+		double HD = HS/10;
 		for (int i = 0; i < numSpeakers; i++) {
 			
 			if (i < numSpeakers/2 - 1 || i >numSpeakers/2) {
@@ -44,7 +44,7 @@ public class Test3_1dLattice {
 		}
 
 		//Interact
-		double sigma = 0.0;
+		double sigma = 0.01;
 		int T = 5;
 		int numSteps = 100000;
 		int threads = 1;//Runtime.getRuntime().availableProcessors();
@@ -63,10 +63,11 @@ public class Test3_1dLattice {
 		int numK = 1;
 
 		//Data array
-		double[][] data = new double[numSpeakers][2];
+		double[][] data = new double[numSteps/2000][numSpeakers];
 		for (int k = 0; k < numK; k++) {
 			
 			//Interact
+			int g = 0;
 			for (int t = 0; t < numSteps; t++) {
 				e.interact(e.getInteractionList(), sigma);
 	
@@ -75,17 +76,25 @@ public class Test3_1dLattice {
 				
 				//Percentage
 				e.percentageOut(t, numSteps);
+				
+				//Write data array
+				for(int i = 0; i < numSpeakers; i++) {
+					if (t%(numSteps/2000) == 0) {
+						//data[i][0] = t;
+						data[g][i] = V[0].getProbability(i, 0);
+					}
+					//data[i][1] = i;
+				}
+				if (t%(numSteps/2000) == 0) {
+					g++;
+				}
 			}
 
-			//Write data array
-			for(int i = 0; i < numSpeakers; i++) {
-				data[i][0] = data[i][0] + V[0].getProbability(i, 0)/numK;
-				data[i][1] = i;
-			}
+			
 		}
 		
 		//Print array to file
-		e.printArray("1DLattice",data,numSpeakers,1);
+		e.printArray("1DLattice",data,numSteps,numSpeakers);
 		//e.printArray("SpeakerWeights",H,numSpeakers,numSpeakers);
 				
 		//Exit gracefully
