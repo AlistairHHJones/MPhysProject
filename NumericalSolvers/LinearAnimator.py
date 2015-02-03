@@ -8,10 +8,10 @@ fig, ax = plt.subplots()
 ax.set_ylim([0,1])
 
 # System parameters
-N = 100
+N = 1000
 n = N/2
 hs = 0.1
-hd = hs/10
+hd = hs
 sigma = 0.01
 l = 0.01
 
@@ -22,22 +22,20 @@ params = [l2,N,n,hs,hd,sigma]
 
 # Length of time and step size
 length = pow(10.0,8)
-step = 2000
+step = length/1000
 
 t = np.arange(1, length, step)
 
 # Initial values
 x0 = []
-x0.append(0.5)
-for i in range(1,N-1):
-    if i == 25:
-        x0.append(0.51)
-    elif i == 75:
-        x0.append(0.49)
+for i in range(0,N):
+    if i == 250:
+        x0.append(1.0)
+    elif i == 750:
+        x0.append(0.0)
     else:
         x0.append(0.5)
 
-x0.append(0.5)
 
 # Solve odes
 psoln = odeint(LinearODE,x0,t,args=(params,))
@@ -58,10 +56,10 @@ def init():
     return line
 
 # Animate
-anim = animation.FuncAnimation(fig, animate, np.arange(1, 2000), init_func=init,
+anim = animation.FuncAnimation(fig, animate, np.arange(1, 1000), init_func=init,
     interval=25, blit=False)
 
 
-anim.save('LinearChain.mp4', fps=30, extra_args=[])
+#anim.save('LinearChain.mp4', fps=30, extra_args=[])
 
 plt.show()

@@ -8,7 +8,7 @@ import math
 N = 100
 n = N/2
 hs = 0.1
-hd = hs/70
+hd = hs/90
 sigma = 0.01
 l = 0.01
 
@@ -19,7 +19,7 @@ params = [l2,N,n,hs,hd,0.0008]
 
 params1 = [l2,N,n,hs,hd,0.0007]
 
-params2 = [l2,N,n,hs,hd,0.0004]
+params2 = [l2,N,n,hs,hd,0.0005]
 params3 = [l2,N,n,hs,hd,0.0002]
 params4 = [l2,N,n,hs,hd,0.00008]
 
