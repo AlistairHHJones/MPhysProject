@@ -125,6 +125,30 @@ A variable object contains the information about each and every variant for ever
 \subsubsection{Speakers}
 An interaction between speakers constitutes both individuals speaking, perceiving the speech of others and modifying their behaviour accordingly. Two important quantities for each speaker are an integer index, for referencing variant specific information in the variable object, and an array for the interactor weights $H_{ij}$, which is shared by all speakers. The ability to retrieve elements of $H_{ij}$ and change them is also crucial. There are three key methods required by speakers, which provide the abilities to: speak by performing step 2 in the sequences above, increasing $n_{iv}$ by 1 each time a token of variant $v$ is generated; perceive the speech of the other speaker in the interacting pair by constructing $y_{iv}$; and finally, calculate $x_{iv}'$ according to \eqref{x}, given $y_{iv}$, for every $v$. 
 
+
+
+\newpage
+\subsection{Time-derivative of usage probabilities for the linear chain}
+
+\begin{align*}
+\frac{\mathrm d}{\mathrm dt} \left\langle x_i \right\rangle &= \sum\limits_{j \neq i}  \left\langle G \lambda^{2} \left\lbrace h_{ij} \left(x_j - x_i \right)  + \left( 2\left\langle s_i \right\rangle - \sigma h_i \right) x_i \left(1-x_i  \right) \right\rbrace \right\rangle \\
+&=  G \lambda^{2} \left\lbrace \sum\limits_{j \neq i} h_{ij} \left( \left\langle x_j \right\rangle -  \left\langle x_i \right\rangle \right)  + \left( 2\left\langle s_i \right\rangle - \sigma h_i \right) \left\langle x_i \right\rangle \left(1- \left\langle x_i \right\rangle \right) \right\rbrace \\
+&= G \lambda^{2} \left\lbrace  h_{i \ i+1} \left( \left\langle x_{i+1} \right\rangle -  \left\langle x_i \right\rangle \right) + h_{i \ i-1} \left( \left\langle x_{i-1} \right\rangle -  \left\langle x_i \right\rangle \right)  + 2 \left( 2\left\langle s_i \right\rangle - \sigma h_i \right) \left\langle x_i \right\rangle \left(1- \left\langle x_i \right\rangle \right) \right\rbrace
+\end{align*}
+
+The last equality arises from the sum over $j \neq i$ in the linear chain only including $j = i \pm 1$. Noting that the chain is considered to be a loop, with 2 groups of size $\frac{N}{2}$ and periodic boundary conditions so that the speakers at either end are adjacent, the following statements can be made about the values of $h_{i \ i+1}$ and $h_{i \ i-1}$,
+\begin{equation}
+
+\end{equation}
+
+\begin{align*}
+\end{align*}
+
+
+
+
+
+
 \newpage
 \begin{thebibliography}{99}
 \bibitem{USM} 	G. J. Baxter, R. A. Blythe, W. Croft and A. J. McKane. Utterance selection model of language change. \emph{Physical Review E} 2006; 73(046118). arXiv:cond-mat/0512588 (accessed 16 January 2015).
