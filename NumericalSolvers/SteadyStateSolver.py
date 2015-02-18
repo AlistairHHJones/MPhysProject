@@ -1,77 +1,20 @@
 import math
-from ODEs import LinearODE as f
 import numpy as np
+import matplotlib.pyplot as plt
 import scipy.sparse.linalg as sp
+import numpy.linalg as linalg
+from ODEs import LinearJacobian
+from ODEs import TwoGroupJacobian
 
 np.set_printoptions(threshold='nan')
+#plt.ylim([-1,1])
 
-def LinearJacobian(x,f,params):
+#File
+#file = open("+ve_-ve_sigma.txt", "w")
+positiveArray = []
+sigmaArray = []
 
-    #Unpack parameters
-    l2,N,n,hs,hd,sigma = params
-    G = 1.0/N
-
-    A = []
-
-    #Rows of jacobian
-    for i in range (0,N):
-        Ai = []
-
-        #Columns of jacobian
-        for j in range (0,N):
-
-            if 0 < i < n-1 or n < i < N-1:
-                if j == i+1 or j == i-1:
-                    Ai.append( hs*(1.0 + 4.0*sigma*x[i]*(1.0-x[i])) )
-                elif i == j:
-                    Ai.append( hs*(4.0*sigma*(x[i+1] + x[i-1] - 1.0)*(1.0 - 2.0*x[i]) - 2.0 ))
-                else:
-                    Ai.append(0.0)
-
-            if i == n:
-                if j == i+1:
-                    Ai.append( hs*(1.0 + 4.0*sigma*x[i]*(1.0 - x[i]) ) )
-                elif j == i-1:
-                    Ai.append( hd*(1.0 + 4.0*sigma*x[i]*(1.0 - x[i]) ) )
-                elif i == j:
-                    Ai.append( 2.0*sigma*( 2.0*(hs*x[i+1] + hd*x[i-1]) - (hs + hd))*(1.0 - 2.0*x[i]) - (hs + hd) )
-                else:
-                    Ai.append(0.0)
-
-            if i == 0:
-                if j == i+1:
-                    Ai.append( hs*(1.0 + 4.0*sigma*x[i]*(1.0 -x[i]) ) )
-                elif j == N-1:
-                    Ai.append( hd*(1.0 + 4.0*sigma*x[i]*(1.0 -x[i]) ) )
-                elif i == j:
-                    Ai.append( 2.0*sigma*( 2.0*(hs*x[i+1] + hd*x[N-1]) - (hs + hd))*(1.0 - 2.0*x[i]) - (hs + hd) )
-                else:
-                    Ai.append(0.0)
-
-            if i == N - 1:
-                if j == 0:
-                    Ai.append( hd*(1.0 + 4.0*sigma*x[i]*(1.0 - x[i]) ) )
-                elif j == i-1:
-                    Ai.append( hs*(1.0 + 4.0*sigma*x[i]*(1.0 -x[i]) ) )
-                elif i == j:
-                    Ai.append( 2.0*sigma*( 2.0*(hd*x[0] + hs*x[i-1]) - (hs + hd))*(1.0 - 2.0*x[i]) - (hs + hd) )
-                else:
-                    Ai.append(0.0)
-
-            if i == n-1:
-                if j == i+1:
-                    Ai.append( hd*(1.0 + 4.0*sigma*x[i]*(1.0 - x[i]) ) )
-                elif j == i-1:
-                    Ai.append( hs*(1.0 + 4.0*sigma*x[i]*(1.0 - x[i]) ) )
-                elif i == j:
-                    Ai.append( 2.0*sigma*( 2.0*(hd*x[i+1] + hs*x[i-1]) - (hs + hd))*(1.0 - 2.0*x[i]) - (hs + hd) )
-                else:
-                    Ai.append(0.0)
-
-        A.append(Ai)
-
-    A = np.asarray(A)
-    return A
+#for i in range(1,1001):
 
 # System parameters
 N = 100
@@ -89,12 +32,14 @@ params = [l2,N,n,hs,hd,sigma]
 # Equilibrium values
 x = []
 for i in range(0,n):
-    x.append(0.9)
+    x.append(0.5)
 for i in range(n,N):
-    x.append(0.1)
+    x.append(0.5)
 
 #Jacobian
-A = LinearJacobian(x,f,params)
+A = LinearJacobian(x,params)
+#A = TwoGroupJacobian(x,params)
+#print(A)
 
 #Find eigenvalues and eigenvectors
 eVals, eVecs = sp.eigs(A,98)
@@ -102,12 +47,28 @@ eVals, eVecs = sp.eigs(A,98)
 #Count number of positive and negative eigenvalues
 positive = 0
 negative = 0
-for i in range (0,98):
+iRange = len(eVals)
+unstable = []
+for i in range (0,iRange):
     if eVals[i] > 0.0:
         positive = positive + 1
+        unstable.append(i)
     else:
         negative = negative + 1
 
-print positive, negative
 
-print eVals
+positiveArray.append(positive)
+sigmaArray.append(sigma)
+print positive
+#data = positive,negative,sigma
+#file.write(str(positive) + " " + str(negative) + " " +  str(sigma) + "\n" )
+
+#file.close()
+# Plot results
+for i in range(0,positive):
+    plt.plot(eVecs[:,unstable[i]])
+
+#plt.legend(loc = 2)
+plt.show()
+
+#print eVals
