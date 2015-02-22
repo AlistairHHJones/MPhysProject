@@ -1,18 +1,19 @@
 \contentsline {section}{\numberline {1}Introduction}{1}
 \contentsline {section}{\numberline {2}Background, motivation and aims}{2}
-\contentsline {subsection}{\numberline {2.1}Selection mechanisms}{2}
-\contentsline {subsection}{\numberline {2.2}History of language change}{3}
-\contentsline {subsection}{\numberline {2.3}Previous results}{5}
-\contentsline {section}{\numberline {3}Method}{6}
-\contentsline {subsection}{\numberline {3.1}Stochastic simulations}{6}
-\contentsline {subsubsection}{\numberline {3.1.1}Refined utterance selection model}{6}
-\contentsline {subsubsection}{\numberline {3.1.2}Emergence of replicator selection}{7}
-\contentsline {subsubsection}{\numberline {3.1.3}Two group model}{8}
-\contentsline {subsubsection}{\numberline {3.1.4}Linear chain model}{8}
-\contentsline {subsection}{\numberline {3.2}Numerical calculations}{9}
-\contentsline {subsubsection}{\numberline {3.2.1}Two group model}{9}
-\contentsline {subsubsection}{\numberline {3.2.2}Linear chain model}{9}
-\contentsline {subsubsection}{\numberline {3.2.3}Linear stability analysis}{10}
-\contentsline {section}{\numberline {4}Results and discussion}{11}
-\contentsline {section}{\numberline {5}Conclusion}{12}
-\contentsline {section}{References}{13}
+\contentsline {subsection}{\numberline {2.1}History of language change}{2}
+\contentsline {subsection}{\numberline {2.2}Selection mechanisms}{3}
+\contentsline {subsection}{\numberline {2.3}Previous studies}{5}
+\contentsline {subsection}{\numberline {2.4}Emergence of replicator selection}{6}
+\contentsline {section}{\numberline {3}Method}{8}
+\contentsline {subsection}{\numberline {3.1}Stochastic modelling}{8}
+\contentsline {subsubsection}{\numberline {3.1.1}Refined utterance selection model}{8}
+\contentsline {subsubsection}{\numberline {3.1.2}Emergence of replicator selection}{9}
+\contentsline {subsubsection}{\numberline {3.1.3}Two-group model}{10}
+\contentsline {subsubsection}{\numberline {3.1.4}Linear chain model}{10}
+\contentsline {subsection}{\numberline {3.2}Mathematical analysis}{10}
+\contentsline {subsubsection}{\numberline {3.2.1}Two-group model}{13}
+\contentsline {subsubsection}{\numberline {3.2.2}Linear chain model}{14}
+\contentsline {subsubsection}{\numberline {3.2.3}Stability analysis}{15}
+\contentsline {section}{\numberline {4}Results and discussion}{16}
+\contentsline {section}{\numberline {5}Conclusion}{17}
+\contentsline {section}{References}{18}

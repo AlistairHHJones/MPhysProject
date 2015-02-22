@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from scipy.integrate import odeint
-from ODEs import TwoGroupODE
+from ODEs import LinearODE
 
 fig, ax = plt.subplots()
 ax.set_ylim([0,1])
@@ -10,8 +10,8 @@ ax.set_ylim([0,1])
 # System parameters
 N = 100
 n = N/2
-hs = 0.1
-hd = hs/10
+hs = 1
+hd = hs
 sigma = 0.01
 l = 0.01
 
@@ -30,15 +30,15 @@ t = np.arange(1, length, step)
 x0 = []
 for i in range(0,N):
     if i == 25:
-        x0.append(1.0)
+        x0.append(0.51)
     elif i == 75:
-        x0.append(0.0)
+        x0.append(0.49)
     else:
         x0.append(0.5)
 
 
 # Solve odes
-psoln = odeint(TwoGroupODE,x0,t,args=(params,))
+psoln = odeint(LinearODE,x0,t,args=(params,))
 
 # Line to plot
 line, = ax.plot(psoln[i,:])
