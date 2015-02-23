@@ -4,41 +4,63 @@ from scipy.integrate import odeint
 from ODEs import LinearODE
 import math
 
+sigmaC = []
 
-plt.ylim([0,1])
-# System parameters
-N = 100
-n = N/2
-hs = 0.1
-hd = hs/30
-sigma = 0.0010
-l = 0.01
+for j in range(1,11):
+    print j
 
-# Set lambda squared to be 1
-l2 = 1.0
+    fixation = True
 
-params = [l2,N,n,hs,hd,sigma]
+    w = 0
+    while fixation == True:
+        # System parameters
+        N = 100
+        n = N/2
+        hs = 1
+        hd = hs/j
+        sigma = 0.00001*w
+        l = 0.01
 
-# Length of time and step size
-length = pow(10.0,8)
-step = length/2
+        w = w+1
+        print w
 
-t = np.arange(1, length, step)
+        # Set lambda squared to be 1
+        l2 = 1.0
 
-# Initial values
-x0 = []
-for i in range(0,N):
-    if i == 25:
-        x0.append(1.0)
-    elif i == 75:
-        x0.append(0.0)
-    else:
-        x0.append(0.5)
+        params = [l2,N,n,hs,hd,sigma]
 
-# Solve odes
-psoln = odeint(LinearODE,x0,t,args=(params,))
+        # Length of time and step size
+        length = pow(10.0,10)
+        step = length/2
+
+        t = np.arange(1, length, step)
+
+
+        # Initial values
+        x0 = []
+        for i in range(0,N):
+            if i == 25:
+                x0.append(1.0)
+            elif i == 75:
+                x0.append(0.0)
+            else:
+                x0.append(0.5)
+
+        # Solve odes
+        psoln = odeint(LinearODE,x0,t,args=(params,))
+
+
+        print abs(psoln[1,25] - psoln[1,75])
+        #Evaluate fixation
+        if abs(psoln[1,25] - psoln[1,75]) > 0.95:
+            sigmaC.append(sigma)
+            fixation = False
+
+print sigmaC
 
 # Plot results
-plt.plot(psoln[1,:], label = sigma)
-plt.legend(loc = 2)
+plt.plot(sigmaC)
 plt.show()
+#plt.plot(psoln[1,:], label = sigma)
+#plt.legend(loc = 2)
+#plt.show()
